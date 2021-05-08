@@ -40,8 +40,28 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final itemSize = MediaQuery.of(context).size.height;
+
+    _moveUp() {
+      _scrollController.animateTo(_scrollController.offset - itemSize,
+          curve: Curves.linear, duration: Duration(milliseconds: 500));
+    }
+
+    _moveDown() {
+      _scrollController.animateTo(_scrollController.offset + itemSize,
+          curve: Curves.linear, duration: Duration(milliseconds: 500));
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -65,8 +85,41 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Expanded(
-              child: ProductsListView(items: _items),
+              child: ProductsListView(
+                items: _items,
+                scrollController: _scrollController,
+              ),
             ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      child: Icon(
+                        Icons.arrow_upward_outlined,
+                        color: Colors.black54,
+                      ),
+                      onTap: () => _moveUp(),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      child: Icon(
+                        Icons.arrow_downward_rounded,
+                        color: Colors.black54,
+                      ),
+                      onTap: () => _moveDown(),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
