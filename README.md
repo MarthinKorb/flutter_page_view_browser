@@ -9,7 +9,7 @@
 ---
 
 <p align="center" border-radius="4px">
-<img src=".github/exp1.png" width=800">
+<img src=".github/exp1.png" width=400">
 </p>
 
 ---
@@ -18,7 +18,7 @@
 
 Clone esse repositório rodando o comando:
 
-    git clone https://github.com/MarthinKorb/shopping_cart.git
+    git clone https://github.com/MarthinKorb/flutter_page_view_browser.git
 
 ---
 
