@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_page_view_browser/product.dart';
+import 'package:flutter_page_view_browser/modules/produto/infra/models/product.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class ProductCardItem extends StatefulWidget {
   final Product produto;
@@ -13,12 +14,12 @@ class ProductCardItem extends StatefulWidget {
 class _ProductCardItemState extends State<ProductCardItem> {
   int _quantity = 0;
 
+  int _currentIndex = 0;
+
   void _incrementQuantity() {
-    if (_quantity <= 9) {
-      setState(() {
-        _quantity += 1;
-      });
-    }
+    setState(() {
+      _quantity += 1;
+    });
   }
 
   void _decrementQuantity() {
@@ -54,13 +55,26 @@ class _ProductCardItemState extends State<ProductCardItem> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: produto.images.length,
-              itemBuilder: (context, index) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.black54,
-                ),
-                child: Image.asset(produto.images[index]),
-              ),
+              itemBuilder: (context, index) {
+                return VisibilityDetector(
+                  key: Key(index.toString()),
+                  onVisibilityChanged: (VisibilityInfo info) {
+                    if (info.visibleFraction == 1)
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.black54,
+                    ),
+                    child: Image.asset(
+                      produto.images[index],
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Expanded(
@@ -70,7 +84,7 @@ class _ProductCardItemState extends State<ProductCardItem> {
               shrinkWrap: true,
               itemBuilder: (context, index) => Row(
                 children: [
-                  index == 0
+                  index == _currentIndex
                       ? Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
@@ -109,7 +123,7 @@ class _ProductCardItemState extends State<ProductCardItem> {
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8),
-          Text('Cabedal:${produto.cabedal}'),
+          Text('Cabedal: ${produto.cabedal}'),
           Text('Solado: ${produto.solado}'),
         ],
       ),
@@ -129,7 +143,7 @@ class _ProductCardItemState extends State<ProductCardItem> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            'R\$${produto.price.toStringAsPrecision(2)}',
+            'R\$ ${produto.price.toStringAsPrecision(2)}',
             style: TextStyle(
               fontSize: 18,
               color: Colors.black54,

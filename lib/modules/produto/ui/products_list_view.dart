@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_page_view_browser/product.dart';
-import 'package:flutter_page_view_browser/product_card_item.dart';
+import 'package:flutter_page_view_browser/modules/produto/infra/models/product.dart';
+import 'package:flutter_page_view_browser/modules/produto/ui/product_card_item.dart';
 
 class ProductsListView extends StatefulWidget {
   final List<Product> items;
   final ScrollController scrollController;
 
-  ProductsListView({@required this.items, this.scrollController});
+  ProductsListView({@required this.items, @required this.scrollController});
 
   @override
   _ProductsListViewState createState() => _ProductsListViewState();
