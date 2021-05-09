@@ -1,6 +1,6 @@
 class Product {
   final int id;
-  final String imageUrl;
+  final List<String> images;
   final String description;
   final String cabedal;
   final String solado;
@@ -8,7 +8,7 @@ class Product {
 
   Product({
     this.id,
-    this.imageUrl,
+    this.images,
     this.description,
     this.cabedal,
     this.solado,

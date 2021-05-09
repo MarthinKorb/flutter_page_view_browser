@@ -44,9 +44,57 @@ class _ProductCardItemState extends State<ProductCardItem> {
     );
   }
 
-  Container _buildProductImageContainer(Product produto) {
+  Widget _buildProductImageContainer(Product produto) {
     return Container(
-      child: Image.network(produto.imageUrl),
+      height: MediaQuery.of(context).size.height * 0.4,
+      child: Column(
+        children: [
+          Expanded(
+            flex: 12,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: produto.images.length,
+              itemBuilder: (context, index) => Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.black54,
+                ),
+                child: Image.asset(produto.images[index]),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: produto.images.length,
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemBuilder: (context, index) => Row(
+                children: [
+                  index == 0
+                      ? Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.blue,
+                          ),
+                          margin: EdgeInsets.all(6),
+                          height: 10,
+                          width: 10,
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.black12,
+                          ),
+                          margin: EdgeInsets.all(6),
+                          height: 10,
+                          width: 10,
+                        ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -60,8 +108,9 @@ class _ProductCardItemState extends State<ProductCardItem> {
             produto.description,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Text(produto.cabedal),
-          Text(produto.solado),
+          SizedBox(height: 8),
+          Text('Cabedal:${produto.cabedal}'),
+          Text('Solado: ${produto.solado}'),
         ],
       ),
     );
@@ -92,32 +141,55 @@ class _ProductCardItemState extends State<ProductCardItem> {
   }
 
   Widget _buildButtonsContainer(Product produto) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildIconButtonContainer(
-              icon: Icon(Icons.remove), onPressed: () => _decrementQuantity()),
-          Container(
-            margin: EdgeInsets.all(12),
-            child: Text(
-              '$_quantity',
-              style: TextStyle(fontSize: 16),
+    return _quantity == 0
+        ? _buildIconButtonContainer(
+            icon: Icon(
+              Icons.add_shopping_cart_outlined,
+              color: Colors.white,
             ),
-          ),
-          _buildIconButtonContainer(
-              icon: Icon(Icons.add), onPressed: () => _incrementQuantity()),
-        ],
-      ),
-    );
+            color: Colors.blue,
+            onPressed: () => _incrementQuantity(),
+          )
+        : Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildIconButtonContainer(
+                  icon: Icon(
+                    Icons.remove,
+                    color: Colors.white,
+                  ),
+                  color: Colors.grey[400],
+                  onPressed: () => _decrementQuantity(),
+                ),
+                Container(
+                  margin: EdgeInsets.all(12),
+                  child: Text(
+                    '$_quantity',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                _buildIconButtonContainer(
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  color: Colors.blue,
+                  onPressed: () => _incrementQuantity(),
+                ),
+              ],
+            ),
+          );
   }
 
   Widget _buildIconButtonContainer(
-      {@required Icon icon, @required Function onPressed}) {
+      {@required Icon icon,
+      @required Function onPressed,
+      Color color = Colors.black12}) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Colors.black12,
+        color: color,
       ),
       child: IconButton(
         icon: icon,
