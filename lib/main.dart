@@ -31,11 +31,43 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_outlined),
-          onPressed: () {},
+          onPressed: () => {},
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.done),
+            onPressed: () => showMyDialog(context),
+          ),
+        ],
         title: Text('Produtos'),
       ),
       body: ProductPage(),
     );
   }
+}
+
+showMyDialog(BuildContext context) async {
+  await showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Row(
+        children: [
+          Icon(Icons.info_outlined),
+          SizedBox(width: 6),
+          Text('Aviso'),
+        ],
+      ),
+      content: Text('Deseja confirmar o pedido?'),
+      actions: [
+        ElevatedButton(
+          child: Text('Não'),
+          onPressed: () => Navigator.pop(context),
+        ),
+        ElevatedButton(
+          child: Text('Sim'),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+    ),
+  );
 }

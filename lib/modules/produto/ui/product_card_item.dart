@@ -47,7 +47,7 @@ class _ProductCardItemState extends State<ProductCardItem> {
 
   Widget _buildProductImageContainer(Product produto) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.42,
       child: Column(
         children: [
           Expanded(
@@ -69,9 +69,7 @@ class _ProductCardItemState extends State<ProductCardItem> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.black54,
                     ),
-                    child: Image.asset(
-                      produto.images[index],
-                    ),
+                    child: Image.asset(produto.images[index]),
                   ),
                 );
               },

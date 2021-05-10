@@ -19,6 +19,12 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   @override
+  void initState() {
+    _scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final itemSize = MediaQuery.of(context).size.height;
 
@@ -59,7 +65,7 @@ class _ProductPageState extends State<ProductPage> {
             style: TextStyle(fontSize: 12),
           ),
           Text(
-            'Mecadorias: R\$',
+            'Mecadorias: R\$0,00',
             style: TextStyle(fontSize: 12),
           ),
         ],
@@ -98,7 +104,7 @@ class _ProductPageState extends State<ProductPage> {
 
   Container _buildActionsUpAndDownContainer(_moveUp(), _moveDown()) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: EdgeInsets.only(left: 12, bottom: 4, right: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,20 +112,28 @@ class _ProductPageState extends State<ProductPage> {
         children: [
           Container(
             padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.blue[300],
+              borderRadius: BorderRadius.circular(8),
+            ),
             child: InkWell(
               child: Icon(
                 Icons.keyboard_arrow_up_outlined,
-                color: Colors.black54,
+                color: Colors.white,
               ),
               onTap: () => _moveUp(),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.blue[300],
+              borderRadius: BorderRadius.circular(8),
+            ),
             child: InkWell(
               child: Icon(
                 Icons.keyboard_arrow_down_outlined,
-                color: Colors.black54,
+                color: Colors.white,
               ),
               onTap: () => _moveDown(),
             ),
