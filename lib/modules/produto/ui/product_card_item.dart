@@ -33,7 +33,7 @@ class _ProductCardItemState extends State<ProductCardItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height - 195,
       child: Column(
         children: [
           _buildProductImageContainer(widget.produto),
@@ -54,7 +54,9 @@ class _ProductCardItemState extends State<ProductCardItem> {
             flex: 12,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              itemExtent: MediaQuery.of(context).size.width,
               itemCount: produto.images.length,
+              physics: PageScrollPhysics(),
               itemBuilder: (context, index) {
                 return VisibilityDetector(
                   key: Key(index.toString()),
@@ -64,12 +66,9 @@ class _ProductCardItemState extends State<ProductCardItem> {
                         _currentIndex = index;
                       });
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.black54,
-                    ),
-                    child: Image.asset(produto.images[index]),
+                  child: Image.asset(
+                    produto.images[index],
+                    fit: BoxFit.cover,
                   ),
                 );
               },

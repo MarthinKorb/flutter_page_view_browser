@@ -18,7 +18,8 @@ class _ProductsListViewState extends State<ProductsListView> {
     return Scaffold(
       body: ListView.builder(
         itemCount: widget.items.length,
-        controller: widget.scrollController,
+        // controller: widget.scrollController,
+        physics: PageScrollPhysics(),
         itemBuilder: (context, index) =>
             ProductCardItem(produto: widget.items[index]),
       ),
